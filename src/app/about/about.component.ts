@@ -11,7 +11,7 @@ import { Dish } from '../shared/dish';
 })
 export class AboutComponent implements OnInit {
 
-  leaders : Leader[];
+  leaders: Leader[];
 
   constructor( private leaderservice: LeaderService) { }
 
