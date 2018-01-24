@@ -13,7 +13,7 @@
               <h3>{{ dish.name | uppercase }}</h3>
             </md-card-title>                      
           </md-card-header>
-          <img md-card-image src={{dish.image}} alt={{dish.name}}>
+          <img md-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}>
           <md-card-content>
             <p> {{ dish.description }}             
             </p>
@@ -42,8 +42,37 @@
           </p>
         </md-list-item>  
       </md-list>
-    </div>
+      <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+          <p>
+            <md-input-container fxFlex="100"
+             dividerColor="{{(formErrors.author) ? 'warn' : 'primary'}}">
+              <input mdInput formControlName="author" placeholder="Name" type="text" required>
+              <md-hint>
+                <span [hidden]="!(formErrors.author)">{{formErrors.author}}</span>
+              </md-hint>        
+            </md-input-container>
+          </p>
+          
+              <md-slider thumbLabel tickInterval="1" min="1" max="5" step="1" value="5"
+                mdInput formControlName="rating"></md-slider>
+          
+          <p>  
+            <md-input-container fxFlex="100"
+             dividerColor="{{(formErrors.comment) ? 'warn' : 'primary'}}">
+              <textarea mdInput formControlName="comment" placeholder="Your Comment" 
+                 rows=12 type="text" required></textarea>
+              <md-hint>
+                 <span [hidden]="!(formErrors.comment)">{{formErrors.comment}}</span>
+              </md-hint>
+            </md-input-container>
+          </p>
+        
+           <button type="submit" md-button-class="background-primary text-floral
+             -white" [disabled]="!commentForm.valid">Submit</button>
+        </form>
+  </div>
     <div [hidden]="dish">
        <md-spinner></md-spinner> <h4>Loading...Please wait</h4>
-    </div>  
+    </div> 
+    
 </div>
