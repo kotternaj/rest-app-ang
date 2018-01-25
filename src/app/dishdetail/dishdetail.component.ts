@@ -19,13 +19,14 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./dishdetail.component.scss']
 })
 export class DishdetailComponent implements OnInit {
-      
+  dishcopy = null;
   dishIds: number[];
   prev: number;
   next: number;
   commentForm: FormGroup;
   dish : Dish;
   comment: Comment;
+  errMess: string;
   
   formErrors = {
     'comment': '',
@@ -54,8 +55,9 @@ export class DishdetailComponent implements OnInit {
 
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params 
-      .switchMap((params : Params) => this.dishservice.getDish(+params['id']))
-      .subscribe(dish=> {this.dish = dish; this.setPrevNext(dish.id); });
+      .switchMap((params : Params) => {return this.dishservice.getDish(+params['id']); })
+      .subscribe(dish=> {this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+        errmess => {this.dish = null; this.errMess = <any>errmess;});
     }
   createForm(){
     this.commentForm = this.fb.group({
@@ -89,6 +91,7 @@ onSubmit(){
   this.comment.date = new Date().toISOString();    
   console.log(this.comment);
   this.dish.comments.push(this.comment);
+  this.dishcopy.save().subscribe(dish=> {this.dish = dish; console.log(this.dish)});
   this.commentForm.reset({
     rating: 5,
     comment: '',
