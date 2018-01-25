@@ -42,6 +42,14 @@
           </p>
         </md-list-item>  
       </md-list>
+
+      <md-list *ngIf="commentForm.valid">
+        <md-list-item>
+          <p md-line><span>{{commentForm.value.comment}}</span></p>
+          <p md-line><span>{{commentForm.value.rating}}</span></p>
+          <p md-line><span> -- {{commentForm.value.author}}</span></p>
+        </md-list-item>  
+      </md-list>
       <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
           <p>
             <md-input-container fxFlex="100"
@@ -67,8 +75,8 @@
             </md-input-container>
           </p>
         
-           <button type="submit" md-button-class="background-primary text-floral
-             -white" [disabled]="!commentForm.valid">Submit</button>
+           <button type="submit" md-button class="background-primary text-floral-white"
+            [disabled]="!commentForm.valid">Submit</button>
         </form>
   </div>
     <div [hidden]="dish">

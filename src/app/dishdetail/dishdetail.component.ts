@@ -25,7 +25,8 @@ export class DishdetailComponent implements OnInit {
   next: number;
   commentForm: FormGroup;
   dish : Dish;
-  comment = Comment;
+  comment: Comment;
+  
   formErrors = {
     'comment': '',
     'author': ''
@@ -58,12 +59,12 @@ export class DishdetailComponent implements OnInit {
     }
   createForm(){
     this.commentForm = this.fb.group({
-      rating: 5,
-      comment: ['', Validators.required],
       author: ['', [Validators.required, Validators.minLength(2)] ],
-      date: ''
+      rating: 5,
+      comment: ['', Validators.required]                 
     });
-    this.commentForm.valueChanges
+  
+  this.commentForm.valueChanges
     .subscribe(data => this.onValueChanged(data));    
   this.onValueChanged(); // (re)set validation messages now
   }
@@ -84,13 +85,14 @@ export class DishdetailComponent implements OnInit {
 }
 
 onSubmit(){
-  this.comment = this.commentForm.value;  
+  this.comment = this.commentForm.value;
+  this.comment.date = new Date().toISOString();    
   console.log(this.comment);
+  this.dish.comments.push(this.comment);
   this.commentForm.reset({
-    rating: '5',
+    rating: 5,
     comment: '',
-    author: '',
-    
+    author: ''    
   });
 }
   setPrevNext(dishId : number){
@@ -102,9 +104,9 @@ onSubmit(){
   goBack(): void{
     this.location.back();
     }
-  addComment(){
+  
     
   }
 
-  }
+  
 
