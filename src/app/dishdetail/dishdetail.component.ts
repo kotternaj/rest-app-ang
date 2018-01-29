@@ -6,9 +6,7 @@ import { Comment } from '../shared/comment';
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
 import 'rxjs/add/operator/switchMap';
-import { visibility } from '../animations/app.animation';
-import { flyInOut} from '../animations/app.animation';
-import { expand } from '../animations/app.animation';
+import { visibility, flyInOut, expand } from '../animations/app.animation';
 
 @Component({
   selector: 'app-dishdetail',
